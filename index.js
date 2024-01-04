@@ -25,6 +25,17 @@ const typeDefs = gql`
         user(id:ID!):User
     }
 
+    input UserCreationInput{
+        firstName:String!
+        lastName:String!
+        email:String! 
+        password:String!
+    }
+
+    type Mutation{
+        CreateUser(input:UserCreationInput!):User
+    }
+
     type User{
         id:ID
         firstName:String
@@ -40,6 +51,17 @@ const resolvers = {
             console.log(id);
             return users.find(item=>item.id == id)
         }
+    },
+    Mutation:{
+        CreateUser:(parent, {input}, context)=>{
+            const newUser ={
+                id:3,
+                ...input
+            };
+            console.log("new user created");
+            return newUser;
+        }
+
     }
 }
 
