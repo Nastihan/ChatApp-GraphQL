@@ -1,17 +1,18 @@
 const apolloServer = require('apollo-server');
-const { appendFile } = require('fs');
+const fs = require('fs');
 const gql = apolloServer.gql;
+const crypto = require("crypto");
 
 const users = [
     {
-        id:1,
+        id:crypto.randomUUID(),
         firstName:"John",
         lastName:"Paul",
         email:"john@gmail.com",
         password:"12345"
     },
     {
-        id:2,
+        id:crypto.randomUUID(),
         firstName:"Arthur",
         lastName:"Morgan",
         email:"Arthur@gmail.com",
@@ -55,9 +56,10 @@ const resolvers = {
     Mutation:{
         CreateUser:(parent, {input}, context)=>{
             const newUser ={
-                id:3,
+                id:crypto.randomUUID(),
                 ...input
             };
+            users.push(newUser);
             console.log("new user created");
             return newUser;
         }
