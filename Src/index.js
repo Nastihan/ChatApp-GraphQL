@@ -12,4 +12,4 @@ const server = new apolloServer.ApolloServer({typeDefs, resolvers});
 
 server.listen().then(({url})=>{
     console.log(`Server ready at ${url}`);
-})
+});
