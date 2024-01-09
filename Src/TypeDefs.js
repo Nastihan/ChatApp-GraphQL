@@ -13,15 +13,18 @@ const typeDefs = gql`
         password:String!
     }
 
-    type Mutation{
-    }
-
     type User{
         id:ID
         firstName:String
         lastName:String
         email:String
     }
+
+    type Mutation{
+        SignUpUser(input:UserCreationInput!):User
+    }
+
+   
 `
 
 module.exports ={
