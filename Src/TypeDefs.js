@@ -7,21 +7,21 @@ const typeDefs = gql`
     }
 
     input UserCreationInput{
-        firstName:String!
-        lastName:String!
-        email:String! 
-        password:String!
+        FirstName:String!
+        LastName:String!
+        Email:String! 
+        Password:String!
     }
 
     type User{
-        id:ID
-        firstName:String
-        lastName:String
-        email:String
+        Id:ID
+        FirstName:String
+        LastName:String
+        Email:String
     }
 
     type Mutation{
-        SignUpUser(input:UserCreationInput!):User
+        SignUpUser(userInput:UserCreationInput!):User
     }
 
    

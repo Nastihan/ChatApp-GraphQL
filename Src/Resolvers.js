@@ -11,17 +11,21 @@ const resolvers = {
     },
     
     Mutation:{
-        SignUpUser:async (_,{input})=>{
-            const user = await prisma.user.findUnique({where:{email:input.email}});
-            if (user)
-            {
-                throw new AuthenticationError("User already exists");
-            }
-            const hashedPass = await bcrypt.hash(input.password, 10);
+        SignUpUser:async (_,{userInput})=>{
+            // const user = await prisma.user.findUnique({
+            //     where:{
+            //         Email:input.email,
+            //     },
+            // });
+            // if (user)
+            // {
+            //     throw new AuthenticationError("User already exists");
+            // }
+            const hashedPass = await bcrypt.hash(userInput.Password, 10);
             const newUser = await prisma.user.create({
                 data:{
-                    ...input,
-                    password:hashedPass
+                    ...userInput,
+                    Password:hashedPass,
                 }
             });
             return newUser;
