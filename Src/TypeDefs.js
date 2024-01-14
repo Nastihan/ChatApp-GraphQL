@@ -13,6 +13,15 @@ const typeDefs = gql`
         Password:String!
     }
 
+    type Token{
+        token:String!
+    }
+
+    input UserSingInInput{
+        Email:String!
+        Password:String!
+    }
+
     type User{
         Id:ID
         FirstName:String
@@ -22,6 +31,7 @@ const typeDefs = gql`
 
     type Mutation{
         SignUpUser(userInput:UserCreationInput!):User
+        SingInUser(userInput:UserSingInInput!):Token
     }
 
    
