@@ -3,12 +3,28 @@ const ApolloServer  = require("apollo-server");
 const prisma = new pc.PrismaClient();
 const ApolloError = ApolloServer.ApolloError;
 const AuthenticationError = ApolloServer.AuthenticationError;
+const ForbiddenError = ApolloServer.ForbiddenError;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const resolvers = {
     Query:{
-        
+        users:async (_,args,{userId})=>{
+            console.log(userId);
+            if(!userId) throw new ForbiddenError("You must be logged in");
+            const users = await prisma.user.findMany({
+                orderBy:{
+                    CreatedAt:"desc"
+                },
+                where:{
+                    Id:{
+                        not:userId
+                    }
+                }
+            });
+            return users;
+        }
+
     },
     
     Mutation:{
@@ -30,7 +46,6 @@ const resolvers = {
                 }
             });
             return newUser;
-
         },
 
         SingInUser:async (_,{userInput})=> {

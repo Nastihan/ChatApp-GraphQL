@@ -3,7 +3,6 @@ const gql = require('apollo-server').gql;
 const typeDefs = gql`
     type Query{
         users:[User]
-        user(id:ID!):User
     }
 
     input UserCreationInput{
