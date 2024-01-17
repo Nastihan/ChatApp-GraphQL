@@ -10,11 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  Id Int @id @default(autoincrement())
+model User {
+  Id        Int       @id @default(autoincrement())
   FirstName String
-  LastName String
-  Password String
-  Email String @unique
+  LastName  String
+  Password  String
+  Email     String    @unique
+  CreatedAt DateTime  @default(now())
+  Receiver  Message[] @relation(name: "Receiver")
+  Sender    Message[] @relation(name: "Sender")
+}
+
+model Message {
+  Id         Int    @id @default(autoincrement())
+  Text       String
+  ReceiverId Int
+  Receiver User @relation(name: "Receiver", fields: [ReceiverId], references: [Id])
+  SenderId Int
+  Sender User @relation(name: "Sender", fields: [SenderId], references: [Id])
   CreatedAt DateTime @default(now())
 }
