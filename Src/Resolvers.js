@@ -66,6 +66,20 @@ const resolvers = {
             const token = jwt.sign({userId:user.Id}, process.env.JWT_SECRET_KEY); 
             return {token};
 
+        },
+
+        CreateMessage: async (_,{receiverId, text},{userId}) =>{
+            if(!userId) throw new ForbiddenError("You must be logged in!!");
+            const message = await prisma.message.create(
+                {
+                    data:{
+                        Text:text,
+                        ReceiverId:receiverId,
+                        SenderId:userId
+                    }
+                }
+            )
+            return message;
         }
 
 

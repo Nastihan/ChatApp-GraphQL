@@ -28,9 +28,20 @@ const typeDefs = gql`
         Email:String
     }
 
+    scalar Date
+
+    type Message{
+        Id:ID!
+        Text:String!
+        ReceiverId:Int!
+        SenderId:Int!
+        CreatedAt:Date!
+    }
+
     type Mutation{
         SignUpUser(userInput:UserCreationInput!):User
         SingInUser(userInput:UserSingInInput!):Token
+        CreateMessage(receiverId:Int!, text:String!):Message
     }
 
    
