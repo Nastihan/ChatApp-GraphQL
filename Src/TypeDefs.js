@@ -3,6 +3,7 @@ const gql = require('apollo-server').gql;
 const typeDefs = gql`
     type Query{
         users:[User]
+        MessageByUser(receiverId:Int!):[Message]
     }
 
     input UserCreationInput{

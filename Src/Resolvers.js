@@ -23,6 +23,22 @@ const resolvers = {
                 }
             });
             return users;
+        },
+        MessageByUser: async (_,{receiverId},{userId})=>{
+            if(!userId) throw new ForbiddenError("You must be logged in");
+            const messages = await prisma.message.findMany({
+                where:{
+                    OR:[
+                        {SenderId:userId, ReceiverId:receiverId},
+                        {SenderId:receiverId, ReceiverId:userId}
+                    ]
+                }, 
+                orderBy:{
+                    CreatedAt:"asc"
+                }
+            })
+
+            return messages;
         }
 
     },
